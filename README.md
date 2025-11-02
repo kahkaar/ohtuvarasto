@@ -1,3 +1,3 @@
 # ohtuvarasto
 
-![Github Actions Workflow Badge](https://github.com/kahkaar/ohtuvarasto/actions/workflows/main.yml/badge.svg)
+[![CI](https://github.com/kahkaar/ohtuvarasto/actions/workflows/main.yml/badge.svg)](https://github.com/kahkaar/ohtuvarasto/actions/workflows/main.yml)
