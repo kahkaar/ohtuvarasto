@@ -1,6 +1,5 @@
 import unittest
 
-import varasto
 from varasto import Varasto
 
 
@@ -78,7 +77,6 @@ class TestVarasto(unittest.TestCase):
         saatu_maara = self.varasto.ota_varastosta(-8)
 
         self.assertAlmostEqual(saatu_maara, 0)
-
 
     def test_str_palautus(self):
         saldo = 2
