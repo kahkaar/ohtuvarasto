@@ -14,8 +14,6 @@ def main():
     print(f"tilavuus = {olutta.tilavuus}")
     print(f"paljonko_mahtuu = {olutta.paljonko_mahtuu()}")
 
-    print("11th statement")
-
 
 if __name__ == "__main__":
     main()
