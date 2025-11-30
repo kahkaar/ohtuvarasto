@@ -95,6 +95,40 @@ docker run -p 8000:8000 \
 - **Manager**: Can create, edit warehouses and items, transfer items
 - **Viewer**: Read-only access to warehouses and items
 
+### Creating Users with Roles
+
+New users who register via the web interface are assigned the **Viewer** role by default. To create users with different roles:
+
+**Option 1: Admin Web Interface**
+1. Log in as an admin user
+2. Click "Users" in the navigation bar
+3. Click "Add User"
+4. Fill in username, email, password, and select the desired role
+5. Click "Create User"
+
+**Option 2: Using Python Shell**
+```bash
+poetry run flask shell
+```
+```python
+from app import db
+from app.models import User, Role
+
+# Create an admin user
+admin = User(username='admin', email='admin@example.com', role=Role.ADMIN.value)
+admin.set_password('your-secure-password')
+db.session.add(admin)
+db.session.commit()
+
+# Create a manager user
+manager = User(username='manager', email='manager@example.com', role=Role.MANAGER.value)
+manager.set_password('your-secure-password')
+db.session.add(manager)
+db.session.commit()
+```
+
+**Note**: The first user created should be an admin to enable user management through the web interface.
+
 ## Testing
 
 Run the test suite:
