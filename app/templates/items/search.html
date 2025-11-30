@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Search Items - Warehouse Management{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Search Items</h1>
+</div>
+
+<div class="search-bar">
+    <form method="GET" class="search-form">
+        <input type="text" name="search" value="{{ search }}" placeholder="Search by name, SKU, or description..." class="form-control form-control-large">
+        <button type="submit" class="btn btn-primary">Search</button>
+        {% if search %}
+        <a href="{{ url_for('items.search_items') }}" class="btn btn-outline">Clear</a>
+        {% endif %}
+    </form>
+</div>
+
+{% if items %}
+<p class="search-results">Found {{ items|length }} item(s)</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>SKU</th>
+            <th>Name</th>
+            <th>Warehouse</th>
+            <th>Quantity</th>
+            <th>Unit</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr class="{{ 'low-stock' if item.quantity <= 10 else '' }}">
+            <td><strong>{{ item.sku }}</strong></td>
+            <td>{{ item.name }}</td>
+            <td>
+                <a href="{{ url_for('warehouses.view_warehouse', warehouse_id=item.warehouse_id) }}">
+                    {{ item.warehouse.name }}
+                </a>
+            </td>
+            <td>
+                {{ item.quantity }}
+                {% if item.quantity <= 10 %}
+                <span class="badge badge-warning">Low</span>
+                {% endif %}
+            </td>
+            <td>{{ item.unit }}</td>
+            <td>
+                {% if current_user.can_edit() %}
+                <a href="{{ url_for('items.edit_item', item_id=item.id) }}" class="btn btn-small">Edit</a>
+                <a href="{{ url_for('items.transfer_item', item_id=item.id) }}" class="btn btn-small btn-secondary">Transfer</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% elif search %}
+<p class="empty-state">No items found matching "{{ search }}"</p>
+{% else %}
+<p class="empty-state">Enter a search term to find items across all warehouses</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome - Warehouse Management{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Welcome to Warehouse Management</h1>
+    <p>Manage your inventory across multiple warehouses with ease.</p>
+    <div class="hero-actions">
+        <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-large">Login</a>
+        <a href="{{ url_for('auth.register') }}" class="btn btn-secondary btn-large">Register</a>
+    </div>
+</div>
+
+<div class="features">
+    <div class="feature-card">
+        <h3>📦 Multiple Warehouses</h3>
+        <p>Create and manage multiple storage locations with detailed information.</p>
+    </div>
+    <div class="feature-card">
+        <h3>📋 Inventory Tracking</h3>
+        <p>Track items, quantities, batch numbers, and expiry dates.</p>
+    </div>
+    <div class="feature-card">
+        <h3>🔄 Easy Transfers</h3>
+        <p>Move items between warehouses with full audit trail.</p>
+    </div>
+    <div class="feature-card">
+        <h3>📊 Low Stock Alerts</h3>
+        <p>Get notified when items are running low.</p>
+    </div>
+</div>
+{% endblock %}

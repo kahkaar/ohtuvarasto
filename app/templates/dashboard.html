@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Warehouse Management{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Dashboard</h1>
+</div>
+
+<div class="dashboard-stats">
+    <div class="stat-card">
+        <h3>{{ warehouses|length }}</h3>
+        <p>Warehouses</p>
+    </div>
+    <div class="stat-card">
+        {% set total_items = namespace(count=0) %}
+        {% for warehouse in warehouses %}
+            {% set total_items.count = total_items.count + warehouse.items.count() %}
+        {% endfor %}
+        <h3>{{ total_items.count }}</h3>
+        <p>Total Items</p>
+    </div>
+    <div class="stat-card alert-stat">
+        <h3>{{ low_stock_items|length }}</h3>
+        <p>Low Stock Alerts</p>
+    </div>
+</div>
+
+<div class="dashboard-grid">
+    <div class="dashboard-section">
+        <h2>Warehouses Overview</h2>
+        {% if warehouses %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>Items</th>
+                    <th>Capacity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for warehouse in warehouses %}
+                <tr>
+                    <td>{{ warehouse.name }}</td>
+                    <td>{{ warehouse.code }}</td>
+                    <td>{{ warehouse.items.count() }}</td>
+                    <td>{{ warehouse.capacity or '-' }}</td>
+                    <td>
+                        <a href="{{ url_for('warehouses.view_warehouse', warehouse_id=warehouse.id) }}" class="btn btn-small">View</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="empty-state">No warehouses yet. <a href="{{ url_for('warehouses.create_warehouse') }}">Create one</a></p>
+        {% endif %}
+    </div>
+
+    <div class="dashboard-section">
+        <h2>Low Stock Alerts</h2>
+        {% if low_stock_items %}
+        <ul class="alert-list">
+            {% for item in low_stock_items[:10] %}
+            <li class="alert-item">
+                <strong>{{ item.name }}</strong> ({{ item.sku }})
+                <span class="badge badge-warning">{{ item.quantity }} {{ item.unit }}</span>
+                <small>in {{ item.warehouse.name }}</small>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="empty-state">No low stock alerts</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
