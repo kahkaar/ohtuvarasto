@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Create Warehouse - Warehouse Management{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Create Warehouse</h1>
+</div>
+
+<div class="form-container">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="name">Name *</label>
+                {{ form.name(class="form-control", id="name") }}
+                {% for error in form.name.errors %}
+                <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group">
+                <label for="code">Code *</label>
+                {{ form.code(class="form-control", id="code", placeholder="e.g., WH-001") }}
+                {% for error in form.code.errors %}
+                <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="address">Address</label>
+            {{ form.address(class="form-control", id="address") }}
+            {% for error in form.address.errors %}
+            <span class="error">{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="capacity">Capacity</label>
+                {{ form.capacity(class="form-control", id="capacity", type="number", step="0.01") }}
+                {% for error in form.capacity.errors %}
+                <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group">
+                <label for="contact_person">Contact Person</label>
+                {{ form.contact_person(class="form-control", id="contact_person") }}
+                {% for error in form.contact_person.errors %}
+                <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="notes">Notes</label>
+            {{ form.notes(class="form-control", id="notes", rows="3") }}
+            {% for error in form.notes.errors %}
+            <span class="error">{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Create Warehouse</button>
+            <a href="{{ url_for('warehouses.list_warehouses') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

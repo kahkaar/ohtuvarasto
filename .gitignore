@@ -9,3 +9,16 @@ __pycache__/
 # Coverage
 .coverage
 htmlcov/
+
+# Environment variables
+.env
+
+# SQLite database
+*.db
+instance/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

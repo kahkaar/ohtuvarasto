@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Transfer {{ item.name }} - Warehouse Management{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Transfer Item</h1>
+</div>
+
+<div class="transfer-info">
+    <div class="transfer-card">
+        <h3>Item Details</h3>
+        <dl>
+            <dt>SKU</dt>
+            <dd>{{ item.sku }}</dd>
+            
+            <dt>Name</dt>
+            <dd>{{ item.name }}</dd>
+            
+            <dt>Current Warehouse</dt>
+            <dd>{{ item.warehouse.name }} ({{ item.warehouse.code }})</dd>
+            
+            <dt>Available Quantity</dt>
+            <dd>{{ item.quantity }} {{ item.unit }}</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="form-container">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        
+        <div class="form-group">
+            <label for="destination_warehouse_id">Destination Warehouse *</label>
+            {{ form.destination_warehouse_id(class="form-control", id="destination_warehouse_id") }}
+            {% for error in form.destination_warehouse_id.errors %}
+            <span class="error">{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        <div class="form-group">
+            <label for="quantity">Quantity to Transfer *</label>
+            {{ form.quantity(class="form-control", id="quantity", type="number", step="0.01", min="0.01", max=item.quantity) }}
+            <small class="form-help">Maximum: {{ item.quantity }} {{ item.unit }}</small>
+            {% for error in form.quantity.errors %}
+            <span class="error">{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        <div class="form-group">
+            <label for="notes">Notes</label>
+            {{ form.notes(class="form-control", id="notes", rows="2", placeholder="Reason for transfer...") }}
+            {% for error in form.notes.errors %}
+            <span class="error">{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Transfer Item</button>
+            <a href="{{ url_for('warehouses.view_warehouse', warehouse_id=item.warehouse_id) }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
