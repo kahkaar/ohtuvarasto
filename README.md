@@ -106,10 +106,19 @@ New users who register via the web interface are assigned the **Viewer** role by
 4. Fill in username, email, password, and select the desired role
 5. Click "Create User"
 
-**Option 2: Using Python Shell**
+**Option 2: Using Docker (Recommended for Docker-only setups)**
+
+First, make sure your containers are running:
 ```bash
-poetry run flask shell
+docker-compose up -d
 ```
+
+Then execute the Flask shell inside the running container:
+```bash
+docker-compose exec app flask shell
+```
+
+In the Flask shell, create users with roles:
 ```python
 from app import db
 from app.models import User, Role
@@ -125,7 +134,15 @@ manager = User(username='manager', email='manager@example.com', role=Role.MANAGE
 manager.set_password('your-secure-password')
 db.session.add(manager)
 db.session.commit()
+
+exit()
 ```
+
+**Option 3: Using Local Python Shell (without Docker)**
+```bash
+poetry run flask shell
+```
+Then use the same Python commands as Option 2.
 
 **Note**: The first user created should be an admin to enable user management through the web interface.
 
