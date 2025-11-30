@@ -57,12 +57,12 @@ def require_delete_permission(func):
 def list_warehouses():
     """List all warehouses."""
     search = request.args.get("search")
-    warehouses = WarehouseService.get_all(search=search)
+    warehouse_data = WarehouseService.get_all_with_totals(search=search)
     result = []
-    for w in warehouses:
-        data = warehouse_schema.dump(w)
-        data["total_quantity"] = w.get_total_quantity()
-        result.append(data)
+    for data in warehouse_data:
+        w_data = warehouse_schema.dump(data["warehouse"])
+        w_data["total_quantity"] = data["total_quantity"]
+        result.append(w_data)
     return jsonify(result)
 
 

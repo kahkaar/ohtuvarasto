@@ -35,6 +35,31 @@ class WarehouseService:
         return query.order_by(Warehouse.name).all()
 
     @staticmethod
+    def get_all_with_totals(search=None):
+        """Get all warehouses with quantity totals in a single query."""
+        warehouses = WarehouseService.get_all(search=search)
+        if not warehouses:
+            return []
+
+        # Get all totals in a single query
+        totals = (
+            db.session.query(
+                Item.warehouse_id, db.func.sum(Item.quantity).label("total")
+            )
+            .group_by(Item.warehouse_id)
+            .all()
+        )
+        totals_dict = {t.warehouse_id: t.total or 0 for t in totals}
+
+        result = []
+        for w in warehouses:
+            result.append({
+                "warehouse": w,
+                "total_quantity": totals_dict.get(w.id, 0),
+            })
+        return result
+
+    @staticmethod
     def get_by_id(warehouse_id):
         """Get a warehouse by ID."""
         return db.session.get(Warehouse, warehouse_id)

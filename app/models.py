@@ -104,8 +104,11 @@ class Warehouse(db.Model):
     )
 
     def get_total_quantity(self):
-        """Get total quantity of all items in this warehouse."""
-        return sum(item.quantity for item in self.items)
+        """Get total quantity of all items in this warehouse using aggregation."""
+        result = db.session.query(db.func.sum(Item.quantity)).filter_by(
+            warehouse_id=self.id
+        ).scalar()
+        return result or 0.0
 
     def __repr__(self):
         return f"<Warehouse {self.code}: {self.name}>"
