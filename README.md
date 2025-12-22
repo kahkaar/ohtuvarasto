@@ -57,7 +57,7 @@ docker build -t warehouse-app:latest .
 ```bash
 docker run -p 8000:8000 \
   -e DATABASE_URL=postgresql://user:pass@host:5432/db \
-  -e SECRET_KEY=your-secure-secret-key \
+  -e SECRET_KEY=your-secret-key \
   warehouse-app:latest
 ```
 
