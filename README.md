@@ -162,7 +162,7 @@ poetry run coverage report
 ## Project Structure
 
 ```
-├── app/                    # Flask application
+├── app/                   # Flask application
 │   ├── __init__.py        # App factory
 │   ├── config.py          # Configuration
 │   ├── models.py          # Database models
