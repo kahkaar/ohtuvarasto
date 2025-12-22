@@ -50,8 +50,6 @@ def require_delete_permission(func):
 
     return decorated
 
-
-# Warehouse endpoints
 @api_bp.route("/warehouses", methods=["GET"])
 @login_required
 def list_warehouses():

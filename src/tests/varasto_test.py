@@ -79,8 +79,8 @@ class TestVarasto(unittest.TestCase):
         self.assertAlmostEqual(saatu_maara, 0)
 
     def test_str_palautus(self):
-        saldo = 2.0
+        saldo = 3.0
         self.varasto.lisaa_varastoon(saldo)
 
-        tulos = f"saldo = {saldo}, vielä tilaa 8.0"
+        tulos = f"saldo = {saldo}, vielä tilaa 7.0"
         self.assertEqual(str(self.varasto), tulos)
