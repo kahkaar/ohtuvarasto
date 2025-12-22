@@ -41,7 +41,7 @@ poetry run flask run
 
 1. Build and run with Docker Compose:
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
 2. Open http://localhost:8000 in your browser
@@ -110,12 +110,12 @@ New users who register via the web interface are assigned the **Viewer** role by
 
 First, make sure your containers are running:
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 Then execute the Flask shell inside the running container:
 ```bash
-docker-compose exec app flask shell
+docker compose exec app flask shell
 ```
 
 In the Flask shell, create users with roles:
